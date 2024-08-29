@@ -1,3 +1,6 @@
+if true then
+  return {}
+end
 -- ~/.config/nvim/lua/plugins/lspconfig.lua
 return {
   -- Install Lsp and formatters using Mason
@@ -12,7 +15,7 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
-      local servers = { "cssls", "html", "jsonls", "tsserver" }
+      local servers = { "cssls", "html" }
       require("mason-lspconfig").setup({
         ensure_installed = servers,
       })
@@ -35,15 +38,6 @@ return {
           capabilities = capabilities,
         })
       end
-
-      -- Special case for tsserver to disable formatting
-      lspconfig.tsserver.setup({
-        on_attach = function(client, bufnr)
-          client.server_capabilities.documentFormattingProvider = false -- Disable tsserver formatting
-          on_attach(client, bufnr) -- Call common on_attach
-        end,
-        capabilities = capabilities,
-      })
     end,
   },
 }
